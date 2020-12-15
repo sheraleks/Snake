@@ -6,8 +6,11 @@
         xmlns:local="clr-namespace:Snake"
         mc:Ignorable="d"
         ResizeMode="NoResize"
-        Title="Snake - Score: 0" SizeToContent="WidthAndHeight" ContentRendered="OnContentRendered">
-        <Border BorderBrush="Blue" BorderThickness="5">
+        Title="Snake - Score: 0" 
+        SizeToContent="WidthAndHeight" 
+        ContentRendered="OnContentRendered" 
+        KeyUp="Window_KeyUp">
+    <Border BorderBrush="LightGray" BorderThickness="5">
             <Canvas Name="GameArea" ClipToBounds="True" Width="800" Height="400">
             </Canvas>
         </Border>
