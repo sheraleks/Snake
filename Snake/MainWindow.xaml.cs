@@ -24,7 +24,7 @@ namespace Snake
         // Параметры размера змейки
         const int SnakeSquareSize = 40;
         const int SnakeStartLength = 3;
-        const int SnakeStartSpeed = 400;
+        const int SnakeStartSpeed = 200;
         const int SnakeSpeedThreshold = 100;
 
         // Парметры цвета змейки
@@ -115,6 +115,7 @@ namespace Snake
                 GameArea.Children.Remove(snakeParts[0].UiElement);
                 snakeParts.RemoveAt(0);
             }
+
             // Помечаем все части змейки как "не головы"
             foreach (SnakePart snakePart in snakeParts)
             {
@@ -191,6 +192,7 @@ namespace Snake
 
             return new Point(foodX, foodY);
         }
+
         private void DrawSnakeFood()
         {
             Point foodPosition = GetNextFoodPosition();
