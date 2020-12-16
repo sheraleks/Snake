@@ -21,6 +21,7 @@ namespace Snake
     /// </summary>
     public partial class MainWindow : Window
     {
+        bool isPlaying = false;
         // Параметры размера змейки
         const int SnakeSquareSize = 40;
         const int SnakeStartLength = 3;
@@ -232,6 +233,42 @@ namespace Snake
             if (snakeDirection != originalSnakeDirection)
                 MoveSnake();
         }
+        private void GameArea_MouseLeftButtonDown(object sender, RoutedEventArgs e)
+        {
+            Point mousePosition = Mouse.GetPosition(GameArea);
+            Point snakeHeadPosition = snakeParts[snakeParts.Count - 1].Position;
+            SnakeDirection originalSnakeDirection = snakeDirection;
+            // Вверх, вниз
+            if (mousePosition.X <= snakeHeadPosition.X + 120 && mousePosition.X >= snakeHeadPosition.X - 120)
+            {
+                // Вверх
+                if (mousePosition.Y <= snakeHeadPosition.Y)
+                {
+                    snakeDirection = SnakeDirection.Up;
+                }
+                // Вниз
+                else
+                {
+                    snakeDirection = SnakeDirection.Down;
+                }
+            }
+            // Влево, вправо
+            if (mousePosition.Y <= snakeHeadPosition.Y + 120 && mousePosition.Y >= snakeHeadPosition.Y - 120)
+            {
+                // Влево
+                if (mousePosition.X <= snakeHeadPosition.X)
+                {
+                    snakeDirection = SnakeDirection.Left;
+                }
+                // Вниз
+                else
+                {
+                    snakeDirection = SnakeDirection.Right;
+                }
+            }
+            if (snakeDirection != originalSnakeDirection)
+                MoveSnake();
+        }
         private void EatSnakeFood()
         {
             snakeLength++;
@@ -248,6 +285,7 @@ namespace Snake
         }
         private void EndGame()
         {
+            isPlaying = false;
             gameTickTimer.IsEnabled = false;
             MessageBox.Show("Oooops, you died!", "Snake");
         }
@@ -273,5 +311,28 @@ namespace Snake
                     EndGame();
             }
         }
+        private void Start_Click(object sender, EventArgs e)
+        {
+            StartNewGame();
+            isPlaying = true;
+        }
+        private void Resume_Pause_Click(object sender, EventArgs e)
+        {
+            if (isPlaying)
+            {
+                isPlaying = false;
+                gameTickTimer.IsEnabled = false;
+            }
+            else 
+            {
+                isPlaying = true;
+                gameTickTimer.IsEnabled = true;
+            }
+        }
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            Environment.Exit(0);
+        }
+
     }
 }

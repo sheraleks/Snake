@@ -10,17 +10,27 @@
         ContentRendered="OnContentRendered" 
         KeyUp="Window_KeyUp">
     <Viewbox Stretch="Fill">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="600"></ColumnDefinition>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="600"></ColumnDefinition>
                 <ColumnDefinition Width="200"></ColumnDefinition>
-        </Grid.ColumnDefinitions>
+            </Grid.ColumnDefinitions>
             <Viewbox Stretch="Fill" Grid.Column="0">
                 <Border BorderBrush="LightGray" BorderThickness="5">
-                    <Canvas Name="GameArea" ClipToBounds="True" Width="600" Height="400">
+                    <Canvas Name="GameArea" ClipToBounds="True" Width="600" Height="400" Background="Transparent" MouseLeftButtonDown="GameArea_MouseLeftButtonDown">
                     </Canvas>
                 </Border>
             </Viewbox>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Button Grid.Row="0" Click="Start_Click" FontSize="20 pt">Start New Game</Button>
+                <Button Grid.Row="1" Click="Resume_Pause_Click" FontSize="20 pt">Resume/Pause</Button>
+                <Button Grid.Row="2" Click="Exit_Click" FontSize="20 pt">Exit</Button>
+            </Grid>
         </Grid>
     </Viewbox>
 </Window>
