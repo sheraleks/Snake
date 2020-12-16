@@ -9,18 +9,18 @@
         Height="400" Width="800" 
         ContentRendered="OnContentRendered" 
         KeyUp="Window_KeyUp">
+    <Viewbox Stretch="Fill">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="600"></ColumnDefinition>
+                <ColumnDefinition Width="200"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        
-        <Viewbox Stretch="Fill" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,200,0">
-            <Border BorderBrush="LightGray" BorderThickness="5">
-            <Canvas Name="GameArea" ClipToBounds="True" Width="600" Height="400">
-            </Canvas>
-        </Border>
-        </Viewbox>
-    
-    </Grid>
+            <Viewbox Stretch="Fill" Grid.Column="0">
+                <Border BorderBrush="LightGray" BorderThickness="5">
+                    <Canvas Name="GameArea" ClipToBounds="True" Width="600" Height="400">
+                    </Canvas>
+                </Border>
+            </Viewbox>
+        </Grid>
+    </Viewbox>
 </Window>

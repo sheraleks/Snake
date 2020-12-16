@@ -50,7 +50,7 @@ namespace Snake
         private void OnContentRendered(object sender, EventArgs e)
         {
             DrawGameArea();
-            StartNewGame();
+            //StartNewGame();
         }
         private void GameTickTimer_Tick(object sender, EventArgs e)
         {
@@ -225,9 +225,9 @@ namespace Snake
                     if (snakeDirection != SnakeDirection.Left)
                         snakeDirection = SnakeDirection.Right;
                     break;
-                case Key.Space:
-                    StartNewGame();
-                    break;
+                //case Key.Space:
+                    //StartNewGame();
+                    //break;
             }
             if (snakeDirection != originalSnakeDirection)
                 MoveSnake();
@@ -249,7 +249,7 @@ namespace Snake
         private void EndGame()
         {
             gameTickTimer.IsEnabled = false;
-            MessageBox.Show("Oooops, you died!\n\nTo start a new game, just press the Space bar...", "Snake");
+            MessageBox.Show("Oooops, you died!", "Snake");
         }
         private void DoCollisionCheck()
         {
