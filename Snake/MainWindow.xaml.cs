@@ -24,8 +24,8 @@ namespace Snake
         // Параметры размера змейки
         const int SnakeSquareSize = 40;
         const int SnakeStartLength = 3;
-        const int SnakeStartSpeed = 200;
-        const int SnakeSpeedThreshold = 100;
+        const int SnakeStartSpeed = 250;
+        const int SnakeSpeedThreshold = 100; // мин. скорость
 
         // Парметры цвета змейки
         private SolidColorBrush snakeBodyBrush = Brushes.Green;
@@ -109,6 +109,7 @@ namespace Snake
         }
         private void MoveSnake()
         {
+            // Могла увеличиться длина змейки
             // Удаление последней части змейки  
             while (snakeParts.Count >= snakeLength)
             {
@@ -116,12 +117,9 @@ namespace Snake
                 snakeParts.RemoveAt(0);
             }
 
-            // Помечаем все части змейки как "не головы"
-            foreach (SnakePart snakePart in snakeParts)
-            {
-                (snakePart.UiElement as Rectangle).Fill = snakeBodyBrush;
-                snakePart.IsHead = false;
-            }
+            // Удалим старую голову
+            (snakeParts[snakeParts.Count - 1].UiElement as Rectangle).Fill = snakeBodyBrush;
+            snakeParts[snakeParts.Count - 1].IsHead = false;
 
             // Определяем сторону, в которую будет двигаться змейка  
             SnakePart snakeHead = snakeParts[snakeParts.Count - 1];
