@@ -239,34 +239,34 @@ namespace Snake
             Point mousePosition = Mouse.GetPosition(GameArea);
             Point snakeHeadPosition = snakeParts[snakeParts.Count - 1].Position;
             SnakeDirection originalSnakeDirection = snakeDirection;
-            //// Вверх, вниз
-            //if (mousePosition.X <= snakeHeadPosition.X + SnakeSquareSize*2 && mousePosition.X >= snakeHeadPosition.X - SnakeSquareSize*2)
-            //{
-            //    // Вверх
-            //    if (mousePosition.Y <= snakeHeadPosition.Y)
-            //    {
-            //        snakeDirection = SnakeDirection.Up;
-            //    }
-            //    // Вниз
-            //    else
-            //    {
-            //        snakeDirection = SnakeDirection.Down;
-            //    }
-            //}
-            //// Влево, вправо
-            //if (mousePosition.Y <= snakeHeadPosition.Y + SnakeSquareSize*2 && mousePosition.Y >= snakeHeadPosition.Y - SnakeSquareSize*2)
-            //{
-            //    // Влево
-            //    if (mousePosition.X <= snakeHeadPosition.X)
-            //    {
-            //        snakeDirection = SnakeDirection.Left;
-            //    }
-            //    // Вниз
-            //    else
-            //    {
-            //        snakeDirection = SnakeDirection.Right;
-            //    }
-            //}
+            // Вверх, вниз
+            if (mousePosition.X <= snakeHeadPosition.X + SnakeSquareSize * 2 && mousePosition.X >= snakeHeadPosition.X - SnakeSquareSize * 2)
+            {
+                // Вверх
+                if (mousePosition.Y <= snakeHeadPosition.Y)
+                {
+                    snakeDirection = SnakeDirection.Up;
+                }
+                // Вниз
+                else
+                {
+                    snakeDirection = SnakeDirection.Down;
+                }
+            }
+            // Влево, вправо
+            if (mousePosition.Y <= snakeHeadPosition.Y + SnakeSquareSize * 2 && mousePosition.Y >= snakeHeadPosition.Y - SnakeSquareSize * 2)
+            {
+                // Влево
+                if (mousePosition.X <= snakeHeadPosition.X)
+                {
+                    snakeDirection = SnakeDirection.Left;
+                }
+                // Вниз
+                else
+                {
+                    snakeDirection = SnakeDirection.Right;
+                }
+            }
             if (snakeDirection != originalSnakeDirection)
                 MoveSnake();
         }
