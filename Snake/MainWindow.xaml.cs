@@ -23,9 +23,9 @@ namespace Snake
     {
         bool isPlaying = false;
         // Параметры размера змейки
-        const int SnakeSquareSize = 40;
+        int SnakeSquareSize = 40;
         const int SnakeStartLength = 3;
-        const int SnakeStartSpeed = 250;
+        const int SnakeStartSpeed = 400;
         const int SnakeSpeedThreshold = 100; // мин. скорость
 
         // Парметры цвета змейки
@@ -171,6 +171,7 @@ namespace Snake
             snakeDirection = SnakeDirection.Right;
             snakeParts.Add(new SnakePart() { Position = new Point(SnakeSquareSize * 5, SnakeSquareSize * 5) });
             gameTickTimer.Interval = TimeSpan.FromMilliseconds(SnakeStartSpeed);
+            DrawGameArea();
             DrawSnake();
             DrawSnakeFood();
             UpdateGameStatus();
@@ -238,34 +239,34 @@ namespace Snake
             Point mousePosition = Mouse.GetPosition(GameArea);
             Point snakeHeadPosition = snakeParts[snakeParts.Count - 1].Position;
             SnakeDirection originalSnakeDirection = snakeDirection;
-            // Вверх, вниз
-            if (mousePosition.X <= snakeHeadPosition.X + 120 && mousePosition.X >= snakeHeadPosition.X - 120)
-            {
-                // Вверх
-                if (mousePosition.Y <= snakeHeadPosition.Y)
-                {
-                    snakeDirection = SnakeDirection.Up;
-                }
-                // Вниз
-                else
-                {
-                    snakeDirection = SnakeDirection.Down;
-                }
-            }
-            // Влево, вправо
-            if (mousePosition.Y <= snakeHeadPosition.Y + 120 && mousePosition.Y >= snakeHeadPosition.Y - 120)
-            {
-                // Влево
-                if (mousePosition.X <= snakeHeadPosition.X)
-                {
-                    snakeDirection = SnakeDirection.Left;
-                }
-                // Вниз
-                else
-                {
-                    snakeDirection = SnakeDirection.Right;
-                }
-            }
+            //// Вверх, вниз
+            //if (mousePosition.X <= snakeHeadPosition.X + SnakeSquareSize*2 && mousePosition.X >= snakeHeadPosition.X - SnakeSquareSize*2)
+            //{
+            //    // Вверх
+            //    if (mousePosition.Y <= snakeHeadPosition.Y)
+            //    {
+            //        snakeDirection = SnakeDirection.Up;
+            //    }
+            //    // Вниз
+            //    else
+            //    {
+            //        snakeDirection = SnakeDirection.Down;
+            //    }
+            //}
+            //// Влево, вправо
+            //if (mousePosition.Y <= snakeHeadPosition.Y + SnakeSquareSize*2 && mousePosition.Y >= snakeHeadPosition.Y - SnakeSquareSize*2)
+            //{
+            //    // Влево
+            //    if (mousePosition.X <= snakeHeadPosition.X)
+            //    {
+            //        snakeDirection = SnakeDirection.Left;
+            //    }
+            //    // Вниз
+            //    else
+            //    {
+            //        snakeDirection = SnakeDirection.Right;
+            //    }
+            //}
             if (snakeDirection != originalSnakeDirection)
                 MoveSnake();
         }
@@ -313,9 +314,20 @@ namespace Snake
         }
         private void Start_Click(object sender, EventArgs e)
         {
-            StartNewGame();
-            isPlaying = true;
+
+            int size = Int32.Parse(textBox1.Text);
+            if (size >= 15 && size <= 70)
+            {
+                SnakeSquareSize = size;
+                StartNewGame();
+                isPlaying = true;
+            }
+            else 
+            {
+                MessageBox.Show("Square size must be between 15 and 70.");
+            }
         }
+
         private void Resume_Pause_Click(object sender, EventArgs e)
         {
             if (isPlaying)
@@ -327,6 +339,14 @@ namespace Snake
             {
                 isPlaying = true;
                 gameTickTimer.IsEnabled = true;
+            }
+        }
+        private void TextBox_TextChanged(object sender, EventArgs e)
+        {
+            if (System.Text.RegularExpressions.Regex.IsMatch(textBox1.Text, "[^0-9]"))
+            {
+                MessageBox.Show("Please enter only numbers.");
+                textBox1.Text = textBox1.Text.Remove(textBox1.Text.Length - 1);
             }
         }
         private void Exit_Click(object sender, RoutedEventArgs e)
