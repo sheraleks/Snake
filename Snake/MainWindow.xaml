@@ -8,7 +8,7 @@
         Title="Snake - Score: 0" 
         Height="400" Width="800" 
         ContentRendered="OnContentRendered" 
-        KeyUp="Window_KeyUp">
+        PreviewKeyDown="Window_KeyDown">
     <Viewbox Stretch="Fill">
         <Grid>
             <Grid.ColumnDefinitions>
@@ -17,7 +17,14 @@
             </Grid.ColumnDefinitions>
             <Viewbox Stretch="Fill" Grid.Column="0">
                 <Border BorderBrush="LightGray" BorderThickness="5">
-                    <Canvas Name="GameArea" ClipToBounds="True" Width="600" Height="400" Background="Transparent" MouseLeftButtonDown="GameArea_MouseLeftButtonDown" MouseRightButtonDown="GameArea_MouseRightButtonDown">
+                    <Canvas Name="GameArea" 
+                            ClipToBounds="True" 
+                            Width="600" Height="400" 
+                            Background="Transparent" 
+                            MouseLeftButtonDown="GameArea_MouseLeftButtonDown" 
+                            MouseRightButtonDown="GameArea_MouseRightButtonDown"
+                            >
+                       
                     </Canvas>
                 </Border>
             </Viewbox>
@@ -35,7 +42,7 @@
                 <Button Grid.Row="4" Click="Resume_Pause_Click" FontSize="20 pt">Resume/Pause</Button>
                 <Button Grid.Row="5" Click="Exit_Click" FontSize="20 pt">Exit</Button>
                 <TextBlock Grid.Row="0" HorizontalAlignment="Center" Text="Square Size" TextWrapping="Wrap" VerticalAlignment="Center" FontSize="20 pt"/>
-                <TextBlock Grid.Row="1" HorizontalAlignment="Center" Text="(between 15 and 70)" TextWrapping="Wrap" VerticalAlignment="Center" FontSize="15 pt"/>
+                <TextBlock Grid.Row="1" HorizontalAlignment="Center" Text="(between 2 and 70)" TextWrapping="Wrap" VerticalAlignment="Center" FontSize="15 pt"/>
             </Grid>
         </Grid>
     </Viewbox>

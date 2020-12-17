@@ -107,23 +107,17 @@ namespace Snake
                     Canvas.SetTop(snakePart.UiElement, snakePart.Position.Y);
                     Canvas.SetLeft(snakePart.UiElement, snakePart.Position.X);
                 }
+                else 
+                {
+                    Canvas.SetTop(snakePart.UiElement, snakePart.Position.Y);
+                    Canvas.SetLeft(snakePart.UiElement, snakePart.Position.X);
+                }
             }
         }
         private void MoveSnake()
         {
-            // Могла увеличиться длина змейки
-            // Удаление последней части змейки  
-            while (snakeParts.Count >= snakeLength)
-            {
-                GameArea.Children.Remove(snakeParts[0].UiElement);
-                snakeParts.RemoveAt(0);
-            }
-
-            // Удалим старую голову
-            (snakeParts[snakeParts.Count - 1].UiElement as Rectangle).Fill = snakeBodyBrush;
-            snakeParts[snakeParts.Count - 1].IsHead = false;
-
-            // Определяем сторону, в которую будет двигаться змейка  
+            // Определяем сторону, в которую будет двигаться змейка
+            Point old_head = snakeParts[snakeParts.Count - 1].Position;
             SnakePart snakeHead = snakeParts[snakeParts.Count - 1];
             double nextX = snakeHead.Position.X;
             double nextY = snakeHead.Position.Y;
@@ -142,13 +136,18 @@ namespace Snake
                     nextY += SnakeSquareSize;
                     break;
             }
-
-            // Добавляем "новую голову" по направлению движения
-            snakeParts.Add(new SnakePart()
+            snakeParts[snakeParts.Count - 1].Position = new Point(nextX, nextY);
+            Point old;
+            for (int i = snakeParts.Count - 2; i >= 0; i--)
             {
-                Position = new Point(nextX, nextY),
-                IsHead = true
-            });
+                old = snakeParts[i].Position;
+                snakeParts[i].Position = old_head;
+                old_head = old;
+            }
+            if (snakeLength > snakeParts.Count)
+            {
+                snakeParts.Insert(0, new SnakePart() { Position = old_head });
+            }
             DrawSnake();
             // Проверка столкновений
             DoCollisionCheck();          
@@ -170,7 +169,10 @@ namespace Snake
             currentScore = 0;
             snakeLength = SnakeStartLength;
             snakeDirection = SnakeDirection.Right;
-            snakeParts.Add(new SnakePart() { Position = new Point(SnakeSquareSize * 5, SnakeSquareSize * 5) });
+            snakeParts.Add(new SnakePart() { Position = new Point(SnakeSquareSize * 3, SnakeSquareSize * 5) });
+            snakeParts.Add(new SnakePart() { Position = new Point(SnakeSquareSize * 4, SnakeSquareSize * 5) });
+            snakeParts.Add(new SnakePart() { Position = new Point(SnakeSquareSize * 5, SnakeSquareSize * 5), IsHead = true });
+            
             gameTickTimer.Interval = TimeSpan.FromMilliseconds(SnakeStartSpeed);
             DrawGameArea();
             DrawSnake();
@@ -207,25 +209,25 @@ namespace Snake
             Canvas.SetTop(snakeFood, foodPosition.Y);
             Canvas.SetLeft(snakeFood, foodPosition.X);
         }
-        private void Window_KeyUp(object sender, KeyEventArgs e)
+        private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             SnakeDirection originalSnakeDirection = snakeDirection;
             switch (e.Key)
             {
                 case Key.Up:
-                    if (snakeDirection != SnakeDirection.Down)
+                    if (snakeDirection == SnakeDirection.Left || snakeDirection == SnakeDirection.Right)
                         snakeDirection = SnakeDirection.Up;
                     break;
                 case Key.Down:
-                    if (snakeDirection != SnakeDirection.Up)
+                    if (snakeDirection == SnakeDirection.Left || snakeDirection == SnakeDirection.Right)
                         snakeDirection = SnakeDirection.Down;
                     break;
                 case Key.Left:
-                    if (snakeDirection != SnakeDirection.Right)
+                    if (snakeDirection == SnakeDirection.Up || snakeDirection == SnakeDirection.Down)
                         snakeDirection = SnakeDirection.Left;
                     break;
                 case Key.Right:
-                    if (snakeDirection != SnakeDirection.Left)
+                    if (snakeDirection == SnakeDirection.Up || snakeDirection == SnakeDirection.Down)
                         snakeDirection = SnakeDirection.Right;
                     break;
             }
@@ -305,7 +307,7 @@ namespace Snake
         {
 
             int size = Int32.Parse(textBox1.Text);
-            if (size >= 15 && size <= 70)
+            if (size >= 2 && size <= 70)
             {
                 isStarted = true;
                 SnakeSquareSize = size;
@@ -314,7 +316,7 @@ namespace Snake
             }
             else 
             {
-                MessageBox.Show("Square size must be between 15 and 70.");
+                MessageBox.Show("Square size must be between 2 and 70.");
             }
         }
 
