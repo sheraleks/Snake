@@ -17,7 +17,7 @@
             </Grid.ColumnDefinitions>
             <Viewbox Stretch="Fill" Grid.Column="0">
                 <Border BorderBrush="LightGray" BorderThickness="5">
-                    <Canvas Name="GameArea" ClipToBounds="True" Width="600" Height="400" Background="Transparent" MouseLeftButtonDown="GameArea_MouseLeftButtonDown">
+                    <Canvas Name="GameArea" ClipToBounds="True" Width="600" Height="400" Background="Transparent" MouseLeftButtonDown="GameArea_MouseLeftButtonDown" MouseRightButtonDown="GameArea_MouseRightButtonDown">
                     </Canvas>
                 </Border>
             </Viewbox>

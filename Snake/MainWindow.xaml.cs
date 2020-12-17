@@ -22,6 +22,7 @@ namespace Snake
     public partial class MainWindow : Window
     {
         bool isPlaying = false;
+        bool isStarted = false;
         // Параметры размера змейки
         int SnakeSquareSize = 40;
         const int SnakeStartLength = 3;
@@ -227,48 +228,35 @@ namespace Snake
                     if (snakeDirection != SnakeDirection.Left)
                         snakeDirection = SnakeDirection.Right;
                     break;
-                //case Key.Space:
-                    //StartNewGame();
-                    //break;
             }
             if (snakeDirection != originalSnakeDirection)
                 MoveSnake();
         }
+        private void GameArea_MouseRightButtonDown(object sender, RoutedEventArgs e)
+        {
+            SnakeDirection originalSnakeDirection = snakeDirection;
+            if (originalSnakeDirection == SnakeDirection.Down)
+                snakeDirection = SnakeDirection.Left;
+            else if (originalSnakeDirection == SnakeDirection.Left)
+                snakeDirection = SnakeDirection.Up;
+            else if (originalSnakeDirection == SnakeDirection.Right)
+                snakeDirection = SnakeDirection.Down;
+            else if (originalSnakeDirection == SnakeDirection.Up)
+                snakeDirection = SnakeDirection.Right;
+            MoveSnake();
+        }
         private void GameArea_MouseLeftButtonDown(object sender, RoutedEventArgs e)
         {
-            Point mousePosition = Mouse.GetPosition(GameArea);
-            Point snakeHeadPosition = snakeParts[snakeParts.Count - 1].Position;
             SnakeDirection originalSnakeDirection = snakeDirection;
-            // Вверх, вниз
-            if (mousePosition.X <= snakeHeadPosition.X + SnakeSquareSize * 2 && mousePosition.X >= snakeHeadPosition.X - SnakeSquareSize * 2)
-            {
-                // Вверх
-                if (mousePosition.Y <= snakeHeadPosition.Y)
-                {
-                    snakeDirection = SnakeDirection.Up;
-                }
-                // Вниз
-                else
-                {
-                    snakeDirection = SnakeDirection.Down;
-                }
-            }
-            // Влево, вправо
-            if (mousePosition.Y <= snakeHeadPosition.Y + SnakeSquareSize * 2 && mousePosition.Y >= snakeHeadPosition.Y - SnakeSquareSize * 2)
-            {
-                // Влево
-                if (mousePosition.X <= snakeHeadPosition.X)
-                {
-                    snakeDirection = SnakeDirection.Left;
-                }
-                // Вниз
-                else
-                {
-                    snakeDirection = SnakeDirection.Right;
-                }
-            }
-            if (snakeDirection != originalSnakeDirection)
-                MoveSnake();
+            if (originalSnakeDirection == SnakeDirection.Down)
+                snakeDirection = SnakeDirection.Right;
+            else if (originalSnakeDirection == SnakeDirection.Left)
+                snakeDirection = SnakeDirection.Down;
+            else if (originalSnakeDirection == SnakeDirection.Right)
+                snakeDirection = SnakeDirection.Up;
+            else if (originalSnakeDirection == SnakeDirection.Up)
+                snakeDirection = SnakeDirection.Left;
+            MoveSnake();
         }
         private void EatSnakeFood()
         {
@@ -286,6 +274,7 @@ namespace Snake
         }
         private void EndGame()
         {
+            isStarted = false;
             isPlaying = false;
             gameTickTimer.IsEnabled = false;
             MessageBox.Show("Oooops, you died!", "Snake");
@@ -318,6 +307,7 @@ namespace Snake
             int size = Int32.Parse(textBox1.Text);
             if (size >= 15 && size <= 70)
             {
+                isStarted = true;
                 SnakeSquareSize = size;
                 StartNewGame();
                 isPlaying = true;
@@ -330,15 +320,18 @@ namespace Snake
 
         private void Resume_Pause_Click(object sender, EventArgs e)
         {
-            if (isPlaying)
+            if (isStarted)
             {
-                isPlaying = false;
-                gameTickTimer.IsEnabled = false;
-            }
-            else 
-            {
-                isPlaying = true;
-                gameTickTimer.IsEnabled = true;
+                if (isPlaying)
+                {
+                    isPlaying = false;
+                    gameTickTimer.IsEnabled = false;
+                }
+                else
+                {
+                    isPlaying = true;
+                    gameTickTimer.IsEnabled = true;
+                }
             }
         }
         private void TextBox_TextChanged(object sender, EventArgs e)
