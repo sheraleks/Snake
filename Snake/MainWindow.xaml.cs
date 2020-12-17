@@ -307,7 +307,7 @@ namespace Snake
         {
 
             int size = Int32.Parse(textBox1.Text);
-            if (size >= 2 && size <= 70)
+            if (size >= 15 && size <= 70)
             {
                 isStarted = true;
                 SnakeSquareSize = size;

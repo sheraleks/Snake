@@ -42,7 +42,7 @@
                 <Button Grid.Row="4" Click="Resume_Pause_Click" FontSize="20 pt">Resume/Pause</Button>
                 <Button Grid.Row="5" Click="Exit_Click" FontSize="20 pt">Exit</Button>
                 <TextBlock Grid.Row="0" HorizontalAlignment="Center" Text="Square Size" TextWrapping="Wrap" VerticalAlignment="Center" FontSize="20 pt"/>
-                <TextBlock Grid.Row="1" HorizontalAlignment="Center" Text="(between 2 and 70)" TextWrapping="Wrap" VerticalAlignment="Center" FontSize="15 pt"/>
+                <TextBlock Grid.Row="1" HorizontalAlignment="Center" Text="(between 15 and 70)" TextWrapping="Wrap" VerticalAlignment="Center" FontSize="15 pt"/>
             </Grid>
         </Grid>
     </Viewbox>
